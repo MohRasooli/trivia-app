@@ -8,6 +8,13 @@ export default function SecondPage() {
   const [error, setError] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [userLocalStorage, setUserLocalStorage] = useState(
+    JSON.parse(localStorage.getItem("userLocalValues") || null)
+  );
+
+  useEffect(() => {
+    localStorage.setItem("userLocalValues", JSON.stringify(userLocalStorage));
+  }, [userLocalStorage]);
 
   function getData() {
     setError(null);
@@ -87,6 +94,18 @@ export default function SecondPage() {
         return u.userAnswer === q.correctAnswer;
       }).length;
       setCorrectAnswersCount(correctCount);
+      setUserLocalStorage((prev) =>
+        prev !== null
+          ? {
+              ...prev,
+              correctCount: prev.correctCount + correctCount,
+              totalQuestions: prev.totalQuestions + quizItems.length,
+            }
+          : {
+              correctCount: correctCount,
+              totalQuestions: quizItems.length,
+            }
+      );
       setIsGameOver(true);
     }
   }
@@ -98,6 +117,21 @@ export default function SecondPage() {
     setError(null);
     setIsGameOver(false);
     getData();
+  }
+
+  function handleResetLocalHistory() {
+    const result = window.confirm(
+      "Are you sure you want to reset your quiz history?"
+    );
+    if (result) {
+      setUserLocalStorage({
+        correctCount: 0,
+        totalQuestions: 0,
+      });
+      localStorage.clear();
+    } else {
+      return;
+    }
   }
 
   return (
@@ -115,12 +149,43 @@ export default function SecondPage() {
           </div>
         )}
 
+        {userLocalStorage !== null && triviaData ? (
+          <div className="user-storage-panel">
+            <span
+              title={`${
+                (userLocalStorage.correctCount /
+                  userLocalStorage.totalQuestions) *
+                100
+              }% correct`}
+            >
+              Correct: {userLocalStorage.correctCount}
+            </span>
+            <span
+              title={`${
+                (userLocalStorage.correctCount /
+                  userLocalStorage.totalQuestions) *
+                100
+              }% correct`}
+            >
+              Total Questions: {userLocalStorage.totalQuestions}
+            </span>
+            <button
+              onClick={handleResetLocalHistory}
+              title="Reset your quiz history"
+              className="reset-ls-btn"
+            >
+              ⟲
+            </button>
+          </div>
+        ) : null}
+
         {quizItems.map((data, mainIndex) => (
           <section key={data.id} className={`trivia q${mainIndex + 1}`}>
             <h2 className="questions">{he.decode(data.question)}</h2>
             {data.answers.map((answer, index) => (
               <React.Fragment key={`${data.id}-answer-${index}`}>
                 <input
+                  disabled={isGameOver}
                   type="radio"
                   name={`q${mainIndex + 1}`}
                   id={`q${mainIndex + 1}a${index + 1}`}

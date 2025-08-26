@@ -58,6 +58,71 @@ h2 {
   box-shadow: 0 20px 50px rgba(255, 250, 209, 0.5);
 }
 
+/* User-storage-panel */
+
+.user-storage-panel {
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 750px;
+  padding: 12px 20px;
+  margin: 0 auto 2rem;
+  background-color: #d6dbf581;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.01);
+  font-family: "Inter", sans-serif;
+  color: #293264;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.user-storage-panel span {
+  flex: 1;
+  text-align: center;
+}
+
+@media (max-width: 467px) {
+  .user-storage-panel {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .user-storage-panel span {
+    text-align: center;
+  }
+
+  .quiz-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Reset LocalStorage Button */
+.reset-ls-btn {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e3f5;
+  color: #4d5b9e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #4d5b9e;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reset-ls-btn:hover {
+  background-color: #d6dbf5;
+  color: #293264;
+}
+
+/* End of user-storage-panel */
+
 section.starter-page h1 {
   font-size: 2rem;
   margin-bottom: 0.75rem;
@@ -163,15 +228,6 @@ section.trivia input[type="radio"]:checked + label {
   margin-top: 1rem;
 }
 
-@media (max-width: 467px) {
-  .quiz-status {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
 .status-game-over {
   display: inline-block;
   font-weight: 700;
@@ -248,4 +304,5 @@ section.trivia label.game-over {
   font-size: 0.75rem;
   opacity: 0.4;
   pointer-events: none;
+  user-select: none;
 }

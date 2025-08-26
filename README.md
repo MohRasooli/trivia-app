@@ -29,6 +29,11 @@ A fun, interactive trivia quiz built with **React** as part of a React course. O
 
 - Allow users to choose quiz categories and difficulty via API requests.
 - Improve and refine the app’s design for a cleaner UI.
-- Store user scores in local history for tracking progress.
+
+---
+
+## New Features
+
+- LocalStorage tracking with stats panel and reset button
 
 ---
