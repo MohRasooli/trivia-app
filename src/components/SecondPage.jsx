@@ -17,19 +17,21 @@ export default function SecondPage() {
   }, [userLocalStorage]);
 
   function getData() {
-    setError(null);
-    return fetch("https://opentdb.com/api.php?amount=5")
-      .then((res) => {
-        if (res.status === 429) throw new Error("Too Many Requests");
-        return res.json();
-      })
-      .then((data) => {
-        setTriviaData(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-        setError(err.message);
-      });
+    setTimeout(() => {
+      setError(null);
+      return fetch("https://opentdb.com/api.php?amount=5")
+        .then((res) => {
+          if (res.status === 429) throw new Error("Too Many Requests");
+          return res.json();
+        })
+        .then((data) => {
+          setTriviaData(data);
+        })
+        .catch((err) => {
+          console.error("Error fetching data:", err);
+          setError(err.message);
+        });
+    }, 1500);
   }
 
   useEffect(() => {
@@ -145,7 +147,14 @@ export default function SecondPage() {
           <div className="error-message">
             <h3>API limit reached. Click below to try again.</h3>
 
-            <button onClick={() => window.location.reload()}>Try Again</button>
+            <button
+              onClick={() => {
+                setError(null);
+                getData();
+              }}
+            >
+              Try Again
+            </button>
           </div>
         )}
 
@@ -153,18 +162,22 @@ export default function SecondPage() {
           <div className="user-storage-panel">
             <span
               title={`${
-                (userLocalStorage.correctCount /
-                  userLocalStorage.totalQuestions) *
-                100
+                userLocalStorage.totalQuestions > 0
+                  ? (userLocalStorage.correctCount /
+                      userLocalStorage.totalQuestions) *
+                    100
+                  : 0
               }% correct`}
             >
               Correct: {userLocalStorage.correctCount}
             </span>
             <span
               title={`${
-                (userLocalStorage.correctCount /
-                  userLocalStorage.totalQuestions) *
-                100
+                userLocalStorage.totalQuestions > 0
+                  ? (userLocalStorage.correctCount /
+                      userLocalStorage.totalQuestions) *
+                    100
+                  : 0
               }% correct`}
             >
               Total Questions: {userLocalStorage.totalQuestions}

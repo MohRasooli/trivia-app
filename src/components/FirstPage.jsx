@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
 export default function FirstPage(props) {
-  const [firstPageFade, setFirstPageFade] = useState({ display: undefined });
-
   return (
     <>
       <section className="starter-page">
