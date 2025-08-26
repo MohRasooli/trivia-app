@@ -8,11 +8,18 @@ body {
   background-color: #f5f7fb;
   font-family: "Inter", sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow: hidden;
 }
 
 button {
@@ -156,6 +163,15 @@ section.trivia input[type="radio"]:checked + label {
   margin-top: 1rem;
 }
 
+@media (max-width: 467px) {
+  .quiz-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .status-game-over {
   display: inline-block;
   font-weight: 700;
@@ -170,7 +186,7 @@ section.trivia input[type="radio"]:checked + label {
   padding: 12px 28px;
   border: none;
   border-radius: 12px;
-  margin: 2rem auto 0;
+  margin: 2rem auto 0.75rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -226,7 +242,7 @@ section.trivia label.game-over {
 }
 
 .signature {
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   right: 10px;
   font-size: 0.75rem;

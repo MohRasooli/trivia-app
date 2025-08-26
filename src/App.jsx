@@ -16,7 +16,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className="page">
       <div className="blob baby"></div>
       <div className="blob lemony"></div>
 
@@ -26,6 +26,6 @@ export default function App() {
         <SecondPage />
       )}
       <div className="signature">© 2025 Mohammad Rasooli</div>
-    </>
+    </div>
   );
 }

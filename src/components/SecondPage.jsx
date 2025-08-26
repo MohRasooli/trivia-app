@@ -139,7 +139,7 @@ export default function SecondPage() {
           </section>
         ))}
         {quizItems.length === triviaData?.results?.length && (
-          <section>
+          <section className="quiz-status">
             {isGameOver ? (
               <p className="status-game-over">{`You scored ${correctAnswersCount}/${quizItems.length} correct answers`}</p>
             ) : null}
