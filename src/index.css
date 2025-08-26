@@ -29,8 +29,8 @@ h2 {
   position: absolute;
   width: 25vw;
   height: 22vw;
-  bottom: -8vw;
-  left: -5vw;
+  bottom: -14vw;
+  left: -7vw;
   background: #deebf8;
   border-radius: 45% 75% 20% 50% / 50% 50% 55% 45%;
   transform: rotate(-30deg);
@@ -42,11 +42,11 @@ h2 {
   position: absolute;
   width: 23vw;
   height: 19vw;
-  top: -7vw;
-  right: -7vw;
+  top: -9vw;
+  right: -9vw;
   background: #fffad1;
-  border-radius: 50% 60% 40% 60% / 10% 40% 50% 50%;
-  transform: rotate(-15deg);
+  border-radius: 90% 10% 60% 60% / 90% 50% 10% 50%;
+  transform: rotate(-77deg);
   z-index: -1;
   box-shadow: 0 20px 50px rgba(255, 250, 209, 0.5);
 }
