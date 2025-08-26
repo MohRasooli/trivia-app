@@ -186,7 +186,7 @@ section.trivia input[type="radio"]:checked + label {
   padding: 12px 28px;
   border: none;
   border-radius: 12px;
-  margin: 2rem auto 0.75rem;
+  margin: 2rem auto 2rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }

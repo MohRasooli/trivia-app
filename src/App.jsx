@@ -25,7 +25,11 @@ export default function App() {
       ) : (
         <SecondPage />
       )}
-      <div className="signature">© 2025 Mohammad Rasooli</div>
+      <div className="signature">
+        © 2025 Mohammad Rasooli
+        <br />
+        Version 1.0.1
+      </div>
     </div>
   );
 }
