@@ -2,7 +2,7 @@
 
 A fun, interactive trivia quiz built with **React** as part of a React course. Originally designed for desktop, with responsive tweaks for smaller screens.
 
-🔗 **Live Demo:** [Trivia App on GitHub Pages](https://mohawkstorm.github.io/trivia-app/)
+🔗 **Live Demo:** [Trivia App on GitHub Pages](https://mohRasooli.github.io/trivia-app/)
 
 ---
 
