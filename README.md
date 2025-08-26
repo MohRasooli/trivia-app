@@ -1,12 +1,34 @@
-# React + Vite
+# Trivia App 🎮
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun, interactive trivia quiz built with **React** as part of a React course. Originally designed for desktop, with responsive tweaks for smaller screens.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [Trivia App on GitHub Pages](https://mohawkstorm.github.io/trivia-app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Check answers and track your quiz score.
+- Play again functionality for endless fun.
+- **Error handling** for failed API requests.
+- Decorative blobs for a modern, playful UI.
+- Built with React hooks (`useState`, `useEffect`).
+
+---
+
+## Tech
+
+- React (JSX, hooks)
+- CSS / Flexbox / Media Queries
+- Trivia API for quiz questions
+- Deployed on GitHub Pages
+
+---
+
+## Future Enhancements
+
+- Allow users to choose quiz categories and difficulty via API requests.
+- Improve and refine the app’s design for a cleaner UI.
+- Store user scores in local history for tracking progress.
+
+---
