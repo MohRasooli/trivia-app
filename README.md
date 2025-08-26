@@ -28,7 +28,6 @@ A fun, interactive trivia quiz built with **React** as part of a React course. O
 ## Future Enhancements
 
 - Allow users to choose quiz categories and difficulty via API requests.
-- Improve and refine the app’s design for a cleaner UI.
 
 ---
 

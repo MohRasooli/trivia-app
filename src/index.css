@@ -192,6 +192,7 @@ section.trivia h2 {
   font-weight: 700;
   color: #293264;
   line-height: 1.4;
+  user-select: none;
 }
 
 section.trivia input[type="radio"] {
@@ -210,6 +211,7 @@ section.trivia label {
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
+  user-select: none;
 }
 
 section.trivia label:hover {
@@ -245,6 +247,7 @@ section.trivia input[type="radio"]:checked + label {
   margin: 2rem auto 2rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  user-select: none;
 }
 
 .check-answers:hover {

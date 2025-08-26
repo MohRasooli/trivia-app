@@ -169,13 +169,15 @@ export default function SecondPage() {
             >
               Total Questions: {userLocalStorage.totalQuestions}
             </span>
-            <button
-              onClick={handleResetLocalHistory}
-              title="Reset your quiz history"
-              className="reset-ls-btn"
-            >
-              ⟲
-            </button>
+            {userLocalStorage.totalQuestions > 0 ? (
+              <button
+                onClick={handleResetLocalHistory}
+                title="Reset your quiz history"
+                className="reset-ls-btn"
+              >
+                ⟲
+              </button>
+            ) : null}
           </div>
         ) : null}
 
