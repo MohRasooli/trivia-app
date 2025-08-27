@@ -4,24 +4,59 @@ import he from "he";
 export default function SecondPage() {
   const [quizItems, setQuizItems] = useState([]);
   const [triviaData, setTriviaData] = useState(null);
+  const [apiCategoryData, setApiCategoryData] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]);
   const [error, setError] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [userChangingSettings, setUserChangingSettings] = useState(false);
   const [userLocalStorage, setUserLocalStorage] = useState(
     JSON.parse(localStorage.getItem("userLocalValues") || null)
   );
+  const [userSettings, setUserSettings] = useState({
+    category: userLocalStorage?.category ?? 0,
+    difficulty: userLocalStorage?.difficulty ?? "any-difficulty",
+  });
+
+  // Sets the localStorage
 
   useEffect(() => {
     localStorage.setItem("userLocalValues", JSON.stringify(userLocalStorage));
   }, [userLocalStorage]);
 
+  // Fetches the data from api and runs it at the startup
+
+  function getCategoryData() {
+    return fetch("https://opentdb.com/api_category.php")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setApiCategoryData(data.trivia_categories);
+      });
+  }
+
   function getData() {
+    setError(null);
+
+    const url = `https://opentdb.com/api.php?amount=5${
+      Number(userSettings.category) !== 0
+        ? `&category=${Number(userSettings.category)}`
+        : ""
+    }${
+      userSettings.difficulty !== `any-difficulty`
+        ? `&difficulty=${userSettings.difficulty}`
+        : ""
+    }`;
+
     setTimeout(() => {
-      setError(null);
-      return fetch("https://opentdb.com/api.php?amount=5")
+      return fetch(url)
         .then((res) => {
           if (res.status === 429) throw new Error("Too Many Requests");
+          if (res.status < 200 || res.status >= 300) {
+            throw new Error(`Request failed with status ${res.status}`);
+          }
+
           return res.json();
         })
         .then((data) => {
@@ -31,12 +66,15 @@ export default function SecondPage() {
           console.error("Error fetching data:", err);
           setError(err.message);
         });
-    }, 1500);
+    }, 2500);
   }
 
   useEffect(() => {
+    getCategoryData();
     getData();
   }, []);
+
+  // Stores the data fetched from api to a local state "quizArray"
 
   useEffect(() => {
     if (!triviaData?.results) return;
@@ -56,6 +94,8 @@ export default function SecondPage() {
     setQuizItems(quizArray);
   }, [triviaData]);
 
+  // Sets the user answers based on their selected labels for each question
+
   function handleAnswerChange(data, answer) {
     setUserAnswers((preVal) => {
       const foundMatch = preVal.some((e) => e.id === data.id);
@@ -68,6 +108,8 @@ export default function SecondPage() {
       }
     });
   }
+
+  // Determines the default and the isGameOver state's className for labels
 
   function labelClassName(data, answer) {
     if (!isGameOver) {
@@ -86,6 +128,8 @@ export default function SecondPage() {
 
     return "game-over";
   }
+
+  // Checks the answer and saves it to localStorage
 
   function checkAnswers() {
     if (!isGameOver && userAnswers.length < quizItems.length) {
@@ -112,126 +156,270 @@ export default function SecondPage() {
     }
   }
 
+  // Starts a new game after isGameOver
+
   function startNewGame() {
     setQuizItems([]);
     setTriviaData(null);
     setUserAnswers([]);
     setError(null);
+    setUserChangingSettings(false);
     setIsGameOver(false);
     getData();
   }
 
+  // For the game-status section where the localStorage data is shown
+
   function handleResetLocalHistory() {
     const result = window.confirm(
-      "Are you sure you want to reset your quiz history?"
+      "Are you sure you want to reset your score history?"
     );
     if (result) {
       setUserLocalStorage({
         correctCount: 0,
         totalQuestions: 0,
       });
-      localStorage.clear();
     } else {
       return;
     }
   }
 
+  // Code for the sidebar
+
+  function changingSettings() {
+    setUserChangingSettings((prev) => !prev);
+  }
+
+  function handleUserSettingsChange(e) {
+    e.preventDefault();
+    const form = e.target;
+
+    const selectedDifficulty = form.difficulty.value;
+    const selectedCategory = form.category.value;
+
+    setUserSettings((prev) => ({
+      ...prev,
+      category: Number(selectedCategory),
+      difficulty: selectedDifficulty,
+    }));
+    setUserLocalStorage((prev) => ({
+      ...prev,
+      category: Number(selectedCategory),
+      difficulty: selectedDifficulty,
+    }));
+    startNewGame();
+  }
+
   return (
     <>
-      <section className="second-page">
-        {!triviaData && !error ? (
-          <p className="loading-trivia">Loading trivia...</p>
-        ) : null}
+      {!error ? (
+        <section className="second-page">
+          {!triviaData && !error ? (
+            <p className="loading-trivia">Loading trivia...</p>
+          ) : null}
 
-        {error && error.includes("Too Many Requests") && (
-          <div className="error-message">
-            <h3>API limit reached. Click below to try again.</h3>
+          {error && error.includes("Too Many Requests") && (
+            <div className="error-message">
+              <h3>API limit reached. Click below to try again.</h3>
 
-            <button
-              onClick={() => {
-                setError(null);
-                getData();
-              }}
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-
-        {userLocalStorage !== null && triviaData ? (
-          <div className="user-storage-panel">
-            <span
-              title={`${
-                userLocalStorage.totalQuestions > 0
-                  ? (userLocalStorage.correctCount /
-                      userLocalStorage.totalQuestions) *
-                    100
-                  : 0
-              }% correct`}
-            >
-              Correct: {userLocalStorage.correctCount}
-            </span>
-            <span
-              title={`${
-                userLocalStorage.totalQuestions > 0
-                  ? (userLocalStorage.correctCount /
-                      userLocalStorage.totalQuestions) *
-                    100
-                  : 0
-              }% correct`}
-            >
-              Total Questions: {userLocalStorage.totalQuestions}
-            </span>
-            {userLocalStorage.totalQuestions > 0 ? (
               <button
-                onClick={handleResetLocalHistory}
-                title="Reset your quiz history"
-                className="reset-ls-btn"
+                onClick={() => {
+                  setError(null);
+                  getData();
+                }}
               >
-                ⟲
+                Try Again
               </button>
-            ) : null}
-          </div>
-        ) : null}
+            </div>
+          )}
 
-        {quizItems.map((data, mainIndex) => (
-          <section key={data.id} className={`trivia q${mainIndex + 1}`}>
-            <h2 className="questions">{he.decode(data.question)}</h2>
-            {data.answers.map((answer, index) => (
-              <React.Fragment key={`${data.id}-answer-${index}`}>
-                <input
-                  disabled={isGameOver}
-                  type="radio"
-                  name={`q${mainIndex + 1}`}
-                  id={`q${mainIndex + 1}a${index + 1}`}
-                  onChange={() => handleAnswerChange(data, answer)}
-                />
-                <label
-                  className={labelClassName(data, answer)}
-                  key={index + 1}
-                  htmlFor={`q${mainIndex + 1}a${index + 1}`}
+          {userLocalStorage !== null && triviaData ? (
+            <div className="user-storage-panel">
+              <span
+                title={`${
+                  userLocalStorage.totalQuestions > 0
+                    ? (userLocalStorage.correctCount /
+                        userLocalStorage.totalQuestions) *
+                      100
+                    : 0
+                }% correct`}
+              >
+                Correct: {userLocalStorage.correctCount}
+              </span>
+              <span
+                title={`${
+                  userLocalStorage.totalQuestions > 0
+                    ? (userLocalStorage.correctCount /
+                        userLocalStorage.totalQuestions) *
+                      100
+                    : 0
+                }% correct`}
+              >
+                Total Questions: {userLocalStorage.totalQuestions}
+              </span>
+              {userLocalStorage.totalQuestions > 0 ? (
+                <button
+                  onClick={handleResetLocalHistory}
+                  title="Reset your quiz history"
+                  className="reset-ls-btn"
                 >
-                  {he.decode(answer)}
-                </label>
-              </React.Fragment>
-            ))}
-            <div className="hr-line"></div>
-          </section>
-        ))}
-        {quizItems.length === triviaData?.results?.length && (
-          <section className="quiz-status">
-            {isGameOver ? (
-              <p className="status-game-over">{`You scored ${correctAnswersCount}/${quizItems.length} correct answers`}</p>
-            ) : null}
-            <button
-              onClick={!isGameOver ? checkAnswers : startNewGame}
-              className="check-answers"
-            >
-              {!isGameOver ? "Check answers" : "Play again"}
-            </button>
-          </section>
-        )}
-      </section>
+                  ⟲
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+
+          {quizItems.map((data, mainIndex) => (
+            <section key={data.id} className={`trivia q${mainIndex + 1}`}>
+              <h2 className="questions">{he.decode(data.question)}</h2>
+              {data.answers.map((answer, index) => (
+                <React.Fragment key={`${data.id}-answer-${index}`}>
+                  <input
+                    disabled={isGameOver}
+                    type="radio"
+                    name={`q${mainIndex + 1}`}
+                    id={`q${mainIndex + 1}a${index + 1}`}
+                    onChange={() => handleAnswerChange(data, answer)}
+                  />
+                  <label
+                    className={labelClassName(data, answer)}
+                    key={index + 1}
+                    htmlFor={`q${mainIndex + 1}a${index + 1}`}
+                  >
+                    {he.decode(answer)}
+                  </label>
+                </React.Fragment>
+              ))}
+              <div className="hr-line"></div>
+            </section>
+          ))}
+          {quizItems.length === triviaData?.results?.length && (
+            <section className="quiz-status">
+              {isGameOver ? (
+                <p className="status-game-over">{`You scored ${correctAnswersCount}/${quizItems.length} correct answers`}</p>
+              ) : null}
+              <button
+                onClick={!isGameOver ? checkAnswers : startNewGame}
+                className="check-answers"
+              >
+                {!isGameOver ? "Check answers" : "Play again"}
+              </button>
+            </section>
+          )}
+
+          {/* Side bar */}
+
+          {triviaData ? (
+            <div className={!userChangingSettings ? "sidebar" : "sidebar open"}>
+              <button
+                onClick={changingSettings}
+                title="Open Trivia Options"
+                className="sidebar-settings-button"
+              >
+                ⚙️
+              </button>
+              <form
+                onSubmit={(e) => {
+                  handleUserSettingsChange(e);
+                }}
+                className="change-settings-form"
+              >
+                <span
+                  title="Reset settings to default"
+                  className="reset-sidebar"
+                  onClick={() => {
+                    setUserSettings({
+                      category: 0,
+                      difficulty: "any-difficulty",
+                    });
+                    setUserLocalStorage((prev) => ({
+                      ...prev,
+                      category: 0,
+                      difficulty: "any-difficulty",
+                    }));
+                    startNewGame();
+                  }}
+                >
+                  ⟳
+                </span>
+
+                <span
+                  title="Close settings menu"
+                  className="close-sidebar"
+                  onClick={changingSettings}
+                >
+                  ×
+                </span>
+                <div className="settings-options">
+                  <label htmlFor="difficulty">Difficulty: </label>
+                  <br />
+                  <select
+                    name="difficulty"
+                    id="difficulty"
+                    value={userSettings.difficulty}
+                    onChange={(e) =>
+                      setUserSettings((prev) => ({
+                        ...prev,
+                        difficulty: e.target.value,
+                      }))
+                    }
+                  >
+                    <option value="any-difficulty">Any Difficulty</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+                <div className="settings-options">
+                  <label htmlFor="category">Category: </label>
+                  <br />
+                  <select
+                    name="category"
+                    id="category"
+                    value={Number(userSettings.category)}
+                    onChange={(e) =>
+                      setUserSettings((prev) => ({
+                        ...prev,
+                        category: Number(e.target.value),
+                      }))
+                    }
+                  >
+                    <option key="0" id="0" value={0}>
+                      Any Category
+                    </option>
+                    {apiCategoryData.map((category) => {
+                      return (
+                        <option
+                          key={Number(category.id)}
+                          value={Number(category.id)}
+                        >
+                          {category.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <button className="settings-submit-button">
+                  Apply Changes
+                </button>
+              </form>
+            </div>
+          ) : null}
+        </section>
+      ) : (
+        <div className="error-message">
+          <h3>API limit reached. Click below to try again.</h3>
+
+          <button
+            onClick={() => {
+              setError(null);
+              getData();
+            }}
+          >
+            Try Again
+          </button>
+        </div>
+      )}
     </>
   );
 }
