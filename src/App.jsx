@@ -28,7 +28,7 @@ export default function App() {
       <div className="signature">
         © 2025 Mohammad Rasooli
         <br />
-        Version 1.2.0
+        Version 1.2.1
       </div>
     </div>
   );
