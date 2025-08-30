@@ -29,5 +29,6 @@ A fun, interactive trivia quiz built with **React** as part of a React course. O
 
 - LocalStorage tracking with stats panel and reset button (v. 1.1.0)
 - Allow users to choose quiz categories and difficulty via API requests (v. 1.2.0)
+- Dark/Light theme toggle with persistent localStorage (v1.3.0)
 
 ---
