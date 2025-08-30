@@ -64,10 +64,10 @@ body.dark {
   --shadow-user-storage-panel: rgba(0, 0, 0, 0.5);
 
   /* Blobs */
-  --bg-blob-baby: #2a2c3e;
-  --shadow-blob-baby: rgba(42, 44, 62, 0.5);
-  --bg-blob-lemony: #3b3c5a;
-  --shadow-blob-lemony: rgba(59, 60, 90, 0.5);
+  --bg-blob-baby: #3a3b56; /* slightly darker than existing */
+  --shadow-blob-baby: rgba(58, 59, 86, 0.5);
+  --bg-blob-lemony: #4c4d6e; /* muted, dark version of lemony */
+  --shadow-blob-lemony: rgba(76, 77, 110, 0.5);
 
   /* Trivia answers */
   --bg-answer-hover: rgba(255, 255, 255, 0.1);
@@ -177,6 +177,11 @@ h2 {
 .user-storage-panel span {
   flex: 1;
   text-align: center;
+}
+
+.quiz-status {
+  display: block;
+  justify-self: center;
 }
 
 @media (max-width: 467px) {
@@ -325,7 +330,7 @@ section.trivia input[type="radio"]:checked + label {
 }
 
 .status-game-over {
-  color: var(--color-light-text);
+  color: var(--color-primary);
   display: inline-block;
   font-weight: 700;
   margin-right: 1rem;
@@ -418,6 +423,9 @@ section.trivia label.game-over {
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+@media (max-width: 790px) {
 }
 
 .sidebar-dark-mode {

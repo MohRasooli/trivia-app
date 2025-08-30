@@ -267,188 +267,192 @@ export default function SecondPage({ darkMode, setDarkMode }) {
               </button>
             </div>
           )}
-
-          {userLocalStorage !== null && triviaData ? (
-            <div className="user-storage-panel">
-              <span
-                title={`${
-                  userLocalStorage.totalQuestions > 0
-                    ? (userLocalStorage.correctCount /
-                        userLocalStorage.totalQuestions) *
-                      100
-                    : 0
-                }% correct`}
-              >
-                Correct: {userLocalStorage.correctCount}
-              </span>
-              <span
-                title={`${
-                  userLocalStorage.totalQuestions > 0
-                    ? (userLocalStorage.correctCount /
-                        userLocalStorage.totalQuestions) *
-                      100
-                    : 0
-                }% correct`}
-              >
-                Total Questions: {userLocalStorage.totalQuestions}
-              </span>
-              {userLocalStorage.totalQuestions > 0 ? (
-                <button
-                  onClick={handleResetLocalHistory}
-                  title="Reset your quiz history"
-                  className="reset-ls-btn"
-                >
-                  ⟲
-                </button>
-              ) : null}
-            </div>
-          ) : null}
-
-          {quizItems.map((data, mainIndex) => (
-            <section key={data.id} className={`trivia q${mainIndex + 1}`}>
-              <h2 className="questions">{he.decode(data.question)}</h2>
-              {data.answers.map((answer, index) => (
-                <React.Fragment key={`${data.id}-answer-${index}`}>
-                  <input
-                    disabled={isGameOver}
-                    type="radio"
-                    name={`q${mainIndex + 1}`}
-                    id={`q${mainIndex + 1}a${index + 1}`}
-                    onChange={() => handleAnswerChange(data, answer)}
-                  />
-                  <label
-                    className={labelClassName(data, answer)}
-                    key={index + 1}
-                    htmlFor={`q${mainIndex + 1}a${index + 1}`}
-                  >
-                    {he.decode(answer)}
-                  </label>
-                </React.Fragment>
-              ))}
-              <div className="hr-line"></div>
-            </section>
-          ))}
-          {quizItems.length === triviaData?.results?.length && (
-            <section className="quiz-status">
-              {isGameOver ? (
-                <p className="status-game-over">{`You scored ${correctAnswersCount}/${quizItems.length} correct answers`}</p>
-              ) : null}
-              <button
-                onClick={!isGameOver ? checkAnswers : startNewGame}
-                className="check-answers"
-              >
-                {!isGameOver ? "Check answers" : "Play again"}
-              </button>
-            </section>
-          )}
-
-          {/* Side bar */}
-
-          {triviaData ? (
-            <div className={!userChangingSettings ? "sidebar" : "sidebar open"}>
-              {
-                <button
-                  onClick={handleDarkMode}
-                  title={`Switch to ${darkMode ? "Light" : "Dark"} mode`}
-                  className="sidebar-settings-button sidebar-dark-mode"
-                >
-                  <img src={darkIcon} alt="dark-mode-icon" />
-                </button>
-              }
-              <button
-                onClick={changingSettings}
-                title="Open Trivia Options"
-                className="sidebar-settings-button"
-              >
-                ⚙️
-              </button>
-              <form
-                onSubmit={(e) => {
-                  handleUserSettingsChange(e);
-                }}
-                className="change-settings-form"
-              >
+          <div className="main-content">
+            {userLocalStorage !== null && triviaData ? (
+              <div className="user-storage-panel">
                 <span
-                  title="Reset settings to default"
-                  className="reset-sidebar"
-                  onClick={() => {
-                    setUserSettings({
-                      category: 0,
-                      difficulty: "any-difficulty",
-                    });
-                    setUserLocalStorage((prev) => ({
-                      ...prev,
-                      category: 0,
-                      difficulty: "any-difficulty",
-                    }));
-                    startNewGame();
-                  }}
+                  title={`${
+                    userLocalStorage.totalQuestions > 0
+                      ? (userLocalStorage.correctCount /
+                          userLocalStorage.totalQuestions) *
+                        100
+                      : 0
+                  }% correct`}
                 >
-                  ⟳
+                  Correct: {userLocalStorage.correctCount}
                 </span>
-
                 <span
-                  title="Close settings menu"
-                  className="close-sidebar"
+                  title={`${
+                    userLocalStorage.totalQuestions > 0
+                      ? (userLocalStorage.correctCount /
+                          userLocalStorage.totalQuestions) *
+                        100
+                      : 0
+                  }% correct`}
+                >
+                  Total Questions: {userLocalStorage.totalQuestions}
+                </span>
+                {userLocalStorage.totalQuestions > 0 ? (
+                  <button
+                    onClick={handleResetLocalHistory}
+                    title="Reset your quiz history"
+                    className="reset-ls-btn"
+                  >
+                    ⟲
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
+
+            {quizItems.map((data, mainIndex) => (
+              <section key={data.id} className={`trivia q${mainIndex + 1}`}>
+                <h2 className="questions">{he.decode(data.question)}</h2>
+                {data.answers.map((answer, index) => (
+                  <React.Fragment key={`${data.id}-answer-${index}`}>
+                    <input
+                      disabled={isGameOver}
+                      type="radio"
+                      name={`q${mainIndex + 1}`}
+                      id={`q${mainIndex + 1}a${index + 1}`}
+                      onChange={() => handleAnswerChange(data, answer)}
+                    />
+                    <label
+                      className={labelClassName(data, answer)}
+                      key={index + 1}
+                      htmlFor={`q${mainIndex + 1}a${index + 1}`}
+                    >
+                      {he.decode(answer)}
+                    </label>
+                  </React.Fragment>
+                ))}
+                <div className="hr-line"></div>
+              </section>
+            ))}
+
+            {quizItems.length === triviaData?.results?.length && (
+              <section className="quiz-status">
+                {isGameOver ? (
+                  <p className="status-game-over">{`You scored ${correctAnswersCount}/${quizItems.length} correct answers`}</p>
+                ) : null}
+                <button
+                  onClick={!isGameOver ? checkAnswers : startNewGame}
+                  className="check-answers"
+                >
+                  {!isGameOver ? "Check answers" : "Play again"}
+                </button>
+              </section>
+            )}
+
+            {/* Side bar */}
+
+            {triviaData ? (
+              <div
+                className={!userChangingSettings ? "sidebar" : "sidebar open"}
+              >
+                {
+                  <button
+                    onClick={handleDarkMode}
+                    title={`Switch to ${darkMode ? "Light" : "Dark"} mode`}
+                    className="sidebar-settings-button sidebar-dark-mode"
+                  >
+                    <img src={darkIcon} alt="dark-mode-icon" />
+                  </button>
+                }
+                <button
                   onClick={changingSettings}
+                  title="Open Trivia Options"
+                  className="sidebar-settings-button"
                 >
-                  ×
-                </span>
-                <div className="settings-options">
-                  <label htmlFor="difficulty">Difficulty: </label>
-                  <br />
-                  <select
-                    name="difficulty"
-                    id="difficulty"
-                    value={userSettings.difficulty}
-                    onChange={(e) =>
-                      setUserSettings((prev) => ({
-                        ...prev,
-                        difficulty: e.target.value,
-                      }))
-                    }
-                  >
-                    <option value="any-difficulty">Any Difficulty</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                  </select>
-                </div>
-                <div className="settings-options">
-                  <label htmlFor="category">Category: </label>
-                  <br />
-                  <select
-                    name="category"
-                    id="category"
-                    value={Number(userSettings.category)}
-                    onChange={(e) =>
-                      setUserSettings((prev) => ({
-                        ...prev,
-                        category: Number(e.target.value),
-                      }))
-                    }
-                  >
-                    <option key="0" id="0" value={0}>
-                      Any Category
-                    </option>
-                    {apiCategoryData.map((category) => {
-                      return (
-                        <option
-                          key={Number(category.id)}
-                          value={Number(category.id)}
-                        >
-                          {category.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <button className="settings-submit-button">
-                  Apply Changes
+                  ⚙️
                 </button>
-              </form>
-            </div>
-          ) : null}
+                <form
+                  onSubmit={(e) => {
+                    handleUserSettingsChange(e);
+                  }}
+                  className="change-settings-form"
+                >
+                  <span
+                    title="Reset settings to default"
+                    className="reset-sidebar"
+                    onClick={() => {
+                      setUserSettings({
+                        category: 0,
+                        difficulty: "any-difficulty",
+                      });
+                      setUserLocalStorage((prev) => ({
+                        ...prev,
+                        category: 0,
+                        difficulty: "any-difficulty",
+                      }));
+                      startNewGame();
+                    }}
+                  >
+                    ⟳
+                  </span>
+
+                  <span
+                    title="Close settings menu"
+                    className="close-sidebar"
+                    onClick={changingSettings}
+                  >
+                    ×
+                  </span>
+                  <div className="settings-options">
+                    <label htmlFor="difficulty">Difficulty: </label>
+                    <br />
+                    <select
+                      name="difficulty"
+                      id="difficulty"
+                      value={userSettings.difficulty}
+                      onChange={(e) =>
+                        setUserSettings((prev) => ({
+                          ...prev,
+                          difficulty: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value="any-difficulty">Any Difficulty</option>
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                    </select>
+                  </div>
+                  <div className="settings-options">
+                    <label htmlFor="category">Category: </label>
+                    <br />
+                    <select
+                      name="category"
+                      id="category"
+                      value={Number(userSettings.category)}
+                      onChange={(e) =>
+                        setUserSettings((prev) => ({
+                          ...prev,
+                          category: Number(e.target.value),
+                        }))
+                      }
+                    >
+                      <option key="0" id="0" value={0}>
+                        Any Category
+                      </option>
+                      {apiCategoryData.map((category) => {
+                        return (
+                          <option
+                            key={Number(category.id)}
+                            value={Number(category.id)}
+                          >
+                            {category.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <button className="settings-submit-button">
+                    Apply Changes
+                  </button>
+                </form>
+              </div>
+            ) : null}
+          </div>
         </section>
       ) : (
         <div className="error-message">
