@@ -1,11 +1,104 @@
+:root {
+  /* Main page */
+  --bg-page: #f5f7fb;
+  --color-primary: #293264;
+  --color-secondary: #4d5b9e;
+  --color-light-text: #f5f7fb;
+  --color-signature: #f5f7fb;
+  --color-error: #d62828;
+
+  /* User stats */
+  --bg-user-storage-panel: #d6dbf581;
+  --shadow-user-storage-panel: rgba(0, 0, 0, 0.01);
+
+  /* Blobs */
+  --bg-blob-baby: #deebf8;
+  --shadow-blob-baby: rgba(222, 235, 248, 0.5);
+  --bg-blob-lemony: #fffad1;
+  --shadow-blob-lemony: rgba(255, 250, 209, 0.5);
+
+  /* Trivia answers */
+  --bg-answer-hover: #f0f0fb;
+  --bg-answer-selected: #d6dbf5;
+  --bg-answer-correct: #94d7a2;
+  --bg-answer-wrong: #f8bcbc;
+  --bg-answer-game-over: transparent;
+  --border-answer: #4d5b9e;
+  --border-answer-game-over: #dbdef0;
+
+  /* Buttons */
+  --bg-btn-primary: #4d5b9e;
+  --bg-btn-primary-hover: #3c4780;
+  --bg-btn-light: #e0e3f5;
+  --bg-btn-light-hover: #d6dbf5;
+  --color-btn-light: #4d5b9e;
+  --color-btn-light-hover: var(--color-primary);
+
+  /* Sidebar */
+  --bg-sidebar: #ffffff;
+  --bg-sidebar-btn: #f5f7fb;
+  --bg-sidebar-btn-hover: #e6e8f8;
+  --border-sidebar-btn: #3c4780;
+  --color-sidebar: #4d5b9e;
+
+  /* HR line */
+  --border-hr: #dbdef0;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body.dark {
+  /* Main page */
+  --bg-page: #1e1f2f;
+  --color-primary: #f5f7fb;
+  --color-secondary: #a3b0f5;
+  --color-light-text: #f5f7fb;
+  --color-error: #ff6b6b;
+
+  /* User stats */
+  --bg-user-storage-panel: rgba(255, 255, 255, 0.05);
+  --shadow-user-storage-panel: rgba(0, 0, 0, 0.5);
+
+  /* Blobs */
+  --bg-blob-baby: #2a2c3e;
+  --shadow-blob-baby: rgba(42, 44, 62, 0.5);
+  --bg-blob-lemony: #3b3c5a;
+  --shadow-blob-lemony: rgba(59, 60, 90, 0.5);
+
+  /* Trivia answers */
+  --bg-answer-hover: rgba(255, 255, 255, 0.1);
+  --bg-answer-selected: #5c6380;
+  --bg-answer-correct: #4caf88;
+  --bg-answer-wrong: #ff8f8f;
+  --bg-answer-game-over: transparent;
+  --border-answer: #a3b0f5;
+  --border-answer-game-over: #555770;
+
+  /* Buttons */
+  --bg-btn-primary: #4d5b9e;
+  --bg-btn-primary-hover: #6f7adf;
+  --bg-btn-light: #2a2c3e;
+  --bg-btn-light-hover: #3b3c5a;
+  --color-btn-light: #a3b0f5;
+  --color-btn-light-hover: #f5f7fb;
+
+  /* Sidebar */
+  --bg-sidebar: #2a2c3e;
+  --bg-sidebar-btn: #3b3c5a;
+  --bg-sidebar-btn-hover: #505273;
+  --border-sidebar-btn: #6f7adf;
+  --color-sidebar: #a3b0f5;
+
+  /* HR line */
+  --border-hr: #555770;
+}
+
 body {
-  background-color: #f5f7fb;
+  background-color: var(--bg-page);
   font-family: "Inter", sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
@@ -42,11 +135,11 @@ h2 {
   height: 22vw;
   bottom: -14vw;
   left: -7vw;
-  background: #deebf8;
+  background: var(--bg-blob-baby);
   border-radius: 45% 75% 20% 50% / 50% 50% 55% 45%;
   transform: rotate(-30deg);
   z-index: -1;
-  box-shadow: 0 20px 50px rgba(222, 235, 248, 0.5);
+  box-shadow: 0 20px 50px var(--shadow-blob-baby);
 }
 
 .blob.lemony {
@@ -55,15 +148,14 @@ h2 {
   height: 19vw;
   top: -9vw;
   right: -9vw;
-  background: #fffad1;
+  background: var(--bg-blob-lemony);
   border-radius: 90% 10% 60% 60% / 90% 50% 10% 50%;
   transform: rotate(-77deg);
   z-index: -1;
-  box-shadow: 0 20px 50px rgba(255, 250, 209, 0.5);
+  box-shadow: 0 20px 50px var(--shadow-blob-lemony);
 }
 
 /* User-storage-panel */
-
 .user-storage-panel {
   user-select: none;
   display: flex;
@@ -73,11 +165,11 @@ h2 {
   max-width: 750px;
   padding: 12px 20px;
   margin: 0 auto 2rem;
-  background-color: #d6dbf581;
+  background-color: var(--bg-user-storage-panel);
   border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 6px 15px var(--shadow-user-storage-panel);
   font-family: "Inter", sans-serif;
-  color: #293264;
+  color: var(--color-primary);
   font-weight: 600;
   font-size: 1rem;
 }
@@ -112,33 +204,34 @@ h2 {
   margin-left: 10px;
   border: none;
   border-radius: 8px;
-  background-color: #e0e3f5;
-  color: #4d5b9e;
+  background-color: var(--bg-btn-light);
+  color: var(--color-btn-light);
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #4d5b9e;
+  border: 1px solid var(--color-btn-light);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .reset-ls-btn:hover {
-  background-color: #d6dbf5;
-  color: #293264;
+  background-color: var(--bg-btn-light-hover);
+  color: var(--color-btn-light-hover);
 }
 
-/* End of user-storage-panel */
-
+/* Starter page */
 section.starter-page h1 {
+  color: var(--color-primary);
   font-size: 2rem;
   margin-bottom: 0.75rem;
 }
 
 section.starter-page p {
+  color: var(--color-primary);
   font-size: 1rem;
 }
 
 section.starter-page .start-btn {
-  color: #f5f7fb;
-  background-color: #4d5b9e;
+  color: var(--color-light-text);
+  background-color: var(--bg-btn-primary);
   font-weight: 500;
   font-size: 1rem;
   min-width: 190px;
@@ -150,11 +243,10 @@ section.starter-page .start-btn {
 }
 
 /* loading */
-
 .loading-trivia {
   font-family: "Inter", sans-serif;
   font-size: 1.2rem;
-  color: #4d5b9e;
+  color: var(--color-secondary);
   animation: pulse 1s infinite ease-in-out;
 }
 
@@ -170,10 +262,7 @@ section.starter-page .start-btn {
   }
 }
 
-/* loading end */
-
 /* 2nd page */
-
 section.second-page {
   display: flex;
   flex-direction: column;
@@ -195,7 +284,7 @@ section.trivia h2 {
   margin-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #293264;
+  color: var(--color-primary);
   line-height: 1.4;
   user-select: none;
 }
@@ -211,8 +300,8 @@ section.trivia label {
   padding: 5px 15px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #293264;
-  border: 1px solid #4d5b9e;
+  color: var(--color-primary);
+  border: 1px solid var(--border-answer);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -220,22 +309,23 @@ section.trivia label {
 }
 
 section.trivia label:hover {
-  background-color: #f0f0fb;
+  background-color: var(--bg-answer-hover);
 }
 
 section.trivia input[type="radio"]:checked + label {
-  background-color: #d6dbf5;
-  border-color: #d6dbf5;
-  color: #293264;
+  background-color: var(--bg-answer-selected);
+  border-color: var(--bg-answer-selected);
+  color: var(--color-primary);
 }
 
 .hr-line {
   width: 100%;
-  border: 1px solid #dbdef0;
+  border: 1px solid var(--border-hr);
   margin-top: 1rem;
 }
 
 .status-game-over {
+  color: var(--color-light-text);
   display: inline-block;
   font-weight: 700;
   margin-right: 1rem;
@@ -243,8 +333,8 @@ section.trivia input[type="radio"]:checked + label {
 }
 
 .check-answers {
-  background-color: #4d5b9e;
-  color: #f5f7fb;
+  background-color: var(--bg-btn-primary);
+  color: var(--color-light-text);
   font-weight: 600;
   font-size: 1rem;
   padding: 12px 28px;
@@ -257,31 +347,30 @@ section.trivia input[type="radio"]:checked + label {
 }
 
 .check-answers:hover {
-  background-color: #3c4780;
+  background-color: var(--bg-btn-primary-hover);
 }
 
 section.trivia label.wrong-answer {
   opacity: 0.5 !important;
-  background-color: #f8bcbc !important;
+  background-color: var(--bg-answer-wrong) !important;
   border: none !important;
-  color: #293264;
+  color: var(--color-primary);
 }
 
 section.trivia label.correct-answer {
-  background-color: #94d7a2 !important;
-  color: #293264 !important;
+  background-color: var(--bg-answer-correct) !important;
+  color: var(--color-primary) !important;
   border: none !important;
   opacity: 1 !important;
 }
 
 section.trivia label.game-over {
   opacity: 0.5 !important;
-  background-color: transparent !important;
-  border: 1px solid #dbdef0 !important;
+  background-color: var(--bg-answer-game-over) !important;
+  border: 1px solid var(--border-answer-game-over) !important;
 }
 
 /* Error */
-
 .error-message {
   display: flex;
   flex-direction: column;
@@ -291,8 +380,8 @@ section.trivia label.game-over {
 }
 
 .error-message button {
-  background-color: #4d5b9e;
-  color: #f5f7fb;
+  background-color: var(--bg-btn-primary);
+  color: var(--color-light-text);
   font-weight: 600;
   font-size: 1rem;
   padding: 12px 28px;
@@ -304,10 +393,11 @@ section.trivia label.game-over {
 }
 
 .error-message button:hover {
-  background-color: #3c4780;
+  background-color: var(--bg-btn-primary-hover);
 }
 
 .signature {
+  color: var(--color-primary);
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -318,24 +408,36 @@ section.trivia label.game-over {
 }
 
 /* Sidebar */
-
 .sidebar {
   position: fixed;
   left: -6px;
   top: 90px;
   min-height: 300px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.sidebar-dark-mode {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.sidebar-dark-mode img {
+  width: 50%;
+  height: auto;
+}
+
 .sidebar .sidebar-settings-button {
-  background-color: #f5f7fb;
-  border: 1px solid #3c4780;
+  background-color: var(--bg-sidebar-btn);
+  border: 1px solid var(--border-sidebar-btn);
   border-radius: 4px;
   font-size: 1rem;
-  height: 65px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s ease, box-shadow 0.3s ease,
@@ -344,13 +446,13 @@ section.trivia label.game-over {
 }
 
 .sidebar .sidebar-settings-button:hover {
-  background-color: #e6e8f8;
+  background-color: var(--bg-sidebar-btn-hover);
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
   transform: translateX(2px);
 }
 
 .sidebar form {
-  background-color: #ffffff;
+  background-color: var(--bg-sidebar);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -359,17 +461,18 @@ section.trivia label.game-over {
   padding: 1.2rem 1rem;
   border-radius: 16px 16px 16px 0;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  border: 1px solid #dbdef0;
+  border: 1px solid var(--border-hr);
   user-select: none;
   position: absolute;
   top: 40px;
-  left: 0;
+  left: 6px;
   transform: translateX(-100%);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: 2;
 }
 
 .sidebar.open form {
+  color: var(--color-secondary);
   transform: translateX(0);
   box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -378,11 +481,11 @@ section.trivia label.game-over {
   content: "⚙ Settings";
   font-size: 0.95rem;
   font-weight: 600;
-  color: #4d5b9e;
+  color: var(--color-secondary);
   margin-bottom: 0.8rem;
   display: block;
   width: 100%;
-  border-bottom: 1px solid #dbdef0;
+  border-bottom: 1px solid var(--border-hr);
   padding-bottom: 0.4rem;
 }
 
@@ -392,9 +495,9 @@ section.trivia label.game-over {
   padding: 5px 10px;
   font-family: "Inter", sans-serif;
   font-size: 0.95rem;
-  color: #293264;
-  background-color: #f5f7fb;
-  border: 1px solid #4d5b9e;
+  color: var(--color-primary);
+  background-color: var(--bg-page);
+  border: 1px solid var(--color-secondary);
   border-radius: 12px;
   appearance: none;
   cursor: pointer;
@@ -403,14 +506,14 @@ section.trivia label.game-over {
 
 .sidebar form select:hover,
 .sidebar form select:focus {
-  border-color: #3c4780;
+  border-color: var(--border-sidebar-btn);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   outline: none;
 }
 
 .sidebar form .settings-submit-button {
-  background-color: #4d5b9e;
-  color: #f5f7fb;
+  background-color: var(--bg-btn-primary);
+  color: var(--color-light-text);
   font-weight: 600;
   font-size: 1rem;
   border: none;
@@ -423,7 +526,7 @@ section.trivia label.game-over {
 }
 
 .sidebar form .settings-submit-button:hover {
-  background-color: #3c4780;
+  background-color: var(--bg-btn-primary-hover);
 }
 
 .close-sidebar {
@@ -433,9 +536,9 @@ section.trivia label.game-over {
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #4d5b9e;
-  background-color: #f5f7fb;
-  border: 1px solid #4d5b9e;
+  color: var(--color-secondary);
+  background-color: var(--bg-sidebar-btn);
+  border: 1px solid var(--color-secondary);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -448,8 +551,8 @@ section.trivia label.game-over {
 }
 
 .close-sidebar:hover {
-  background-color: #e6e8f8;
-  color: #d62828;
+  background-color: var(--bg-sidebar-btn-hover);
+  color: var(--color-error);
   transform: scale(1.05);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
@@ -461,9 +564,9 @@ section.trivia label.game-over {
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #4d5b9e;
-  background-color: #f5f7fb;
-  border: 1px solid #4d5b9e;
+  color: var(--color-secondary);
+  background-color: var(--bg-sidebar-btn);
+  border: 1px solid var(--color-secondary);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -476,8 +579,8 @@ section.trivia label.game-over {
 }
 
 .reset-sidebar:hover {
-  background-color: #e6e8f8;
-  color: #d62828;
+  background-color: var(--bg-sidebar-btn-hover);
+  color: var(--color-error);
   transform: scale(1.05);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-export default function FirstPage(props) {
+export default function FirstPage({ startGame }) {
   return (
     <>
       <section className="starter-page">
         <h1>Quizzical</h1>
         <p>Test your brain with quick and fun trivia quizzes!</p>
-        <button className="start-btn" onClick={props.startGame}>
+        <button className="start-btn" onClick={startGame}>
           Start quiz
         </button>
       </section>

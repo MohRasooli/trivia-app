@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react";
 import he from "he";
+import darkIcon from "../assets/images/dark-mode-icon.png";
 
-export default function SecondPage() {
+export default function SecondPage({ darkMode, setDarkMode }) {
+  // The quiz questions and answers ready to show
   const [quizItems, setQuizItems] = useState([]);
+
+  // Raw trivia data straight from the API
   const [triviaData, setTriviaData] = useState(null);
+
+  // All the categories we can pick from
   const [apiCategoryData, setApiCategoryData] = useState(null);
+
+  // What the user picked for each question
   const [userAnswers, setUserAnswers] = useState([]);
+
+  // Any errors we run into while fetching data
   const [error, setError] = useState(null);
+
+  // Is the quiz finished?
   const [isGameOver, setIsGameOver] = useState(false);
+
+  // User's correct answers counter
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+
+  // Is the user changing settings right now in the sidebar?
   const [userChangingSettings, setUserChangingSettings] = useState(false);
+
+  // simple localStorage state
   const [userLocalStorage, setUserLocalStorage] = useState(
     JSON.parse(localStorage.getItem("userLocalValues") || null)
   );
+
+  // User's current category/difficulty
   const [userSettings, setUserSettings] = useState({
     category: userLocalStorage?.category ?? 0,
     difficulty: userLocalStorage?.difficulty ?? "any-difficulty",
@@ -23,6 +43,10 @@ export default function SecondPage() {
   useEffect(() => {
     localStorage.setItem("userLocalValues", JSON.stringify(userLocalStorage));
   }, [userLocalStorage]);
+
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   // Fetches the data from api and runs it at the startup
 
@@ -190,6 +214,17 @@ export default function SecondPage() {
     setUserChangingSettings((prev) => !prev);
   }
 
+  function handleDarkMode() {
+    setDarkMode((prev) => {
+      const newTheme = !prev;
+      setUserLocalStorage((prev) => ({
+        ...prev,
+        darkMode: newTheme,
+      }));
+      return newTheme;
+    });
+  }
+
   function handleUserSettingsChange(e) {
     e.preventDefault();
     const form = e.target;
@@ -311,6 +346,15 @@ export default function SecondPage() {
 
           {triviaData ? (
             <div className={!userChangingSettings ? "sidebar" : "sidebar open"}>
+              {
+                <button
+                  onClick={handleDarkMode}
+                  title={`Switch to ${darkMode ? "Light" : "Dark"} mode`}
+                  className="sidebar-settings-button sidebar-dark-mode"
+                >
+                  <img src={darkIcon} alt="dark-mode-icon" />
+                </button>
+              }
               <button
                 onClick={changingSettings}
                 title="Open Trivia Options"

@@ -6,9 +6,20 @@ export default function App() {
   // States
   const [isGameStarted, setIsGameStarted] = useState(false);
 
-  // Vars
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("userLocalValues"))?.darkMode ?? false
+  );
 
-  // Fetch
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+
+    const prevStorage =
+      JSON.parse(localStorage.getItem("userLocalValues")) || {};
+    localStorage.setItem(
+      "userLocalValues",
+      JSON.stringify({ ...prevStorage, darkMode })
+    );
+  }, [darkMode]);
 
   // Onclicks
   function startGame() {
@@ -23,12 +34,12 @@ export default function App() {
       {!isGameStarted ? (
         <FirstPage isGameStarted={isGameStarted} startGame={startGame} />
       ) : (
-        <SecondPage />
+        <SecondPage darkMode={darkMode} setDarkMode={setDarkMode} />
       )}
       <div className="signature">
         © 2025 Mohammad Rasooli
         <br />
-        Version 1.2.1
+        Version 1.3.0
       </div>
     </div>
   );
