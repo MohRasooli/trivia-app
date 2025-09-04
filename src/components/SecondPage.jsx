@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import he from "he";
 import darkIcon from "../assets/images/dark-mode-icon.png";
+import githubDarkLogo from "../assets/images/github-dark-mode-logo.png";
+import githubLightLogo from "../assets/images/github-light-mode-logo.png";
 
 export default function SecondPage({ darkMode, setDarkMode }) {
   // The quiz questions and answers ready to show
@@ -359,6 +361,18 @@ export default function SecondPage({ darkMode, setDarkMode }) {
                 >
                   ⚙️
                 </button>
+                {
+                  <a
+                    href="https://github.com/MohRasooli/"
+                    target="_blank"
+                    className="sidebar-settings-button sidebar-dark-mode"
+                  >
+                    <img
+                      src={darkMode ? githubDarkLogo : githubLightLogo}
+                      alt="dark-mode-icon"
+                    />
+                  </a>
+                }
                 <form
                   onSubmit={(e) => {
                     handleUserSettingsChange(e);

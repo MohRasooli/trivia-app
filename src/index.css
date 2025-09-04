@@ -64,14 +64,14 @@ body.dark {
   --shadow-user-storage-panel: rgba(0, 0, 0, 0.5);
 
   /* Blobs */
-  --bg-blob-baby: #3a3b56; /* slightly darker than existing */
+  --bg-blob-baby: #3a3b56;
   --shadow-blob-baby: rgba(58, 59, 86, 0.5);
-  --bg-blob-lemony: #4c4d6e; /* muted, dark version of lemony */
+  --bg-blob-lemony: #4c4d6e;
   --shadow-blob-lemony: rgba(76, 77, 110, 0.5);
 
   /* Trivia answers */
   --bg-answer-hover: rgba(255, 255, 255, 0.1);
-  --bg-answer-selected: #5c6380;
+  --bg-answer-selected: #5c6980;
   --bg-answer-correct: #4caf88;
   --bg-answer-wrong: #ff8f8f;
   --bg-answer-game-over: transparent;
@@ -377,6 +377,9 @@ section.trivia label.game-over {
 }
 
 /* Error */
+body.dark .error-message {
+  color: var(--color-light-text);
+}
 .error-message {
   display: flex;
   flex-direction: column;
