@@ -311,6 +311,7 @@ section.trivia label {
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 section.trivia label:hover {

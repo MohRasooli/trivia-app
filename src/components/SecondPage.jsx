@@ -164,18 +164,12 @@ export default function SecondPage({ darkMode, setDarkMode }) {
         return u.userAnswer === q.correctAnswer;
       }).length;
       setCorrectAnswersCount(correctCount);
-      setUserLocalStorage((prev) =>
-        prev !== null
-          ? {
-              ...prev,
-              correctCount: prev.correctCount + correctCount,
-              totalQuestions: prev.totalQuestions + quizItems.length,
-            }
-          : {
-              correctCount: correctCount,
-              totalQuestions: quizItems.length,
-            }
-      );
+      setUserLocalStorage((prev) => ({
+        ...prev,
+        correctCount: (prev?.correctCount ?? 0) + correctCount,
+        totalQuestions: (prev?.totalQuestions ?? 0) + quizItems.length,
+      }));
+
       setIsGameOver(true);
     }
   }
